@@ -1,5 +1,5 @@
 package com.thebinaryfox.finecraft;
 
-public class BootstrapUI {
+public class StringCrypt {
 
 }

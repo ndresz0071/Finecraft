@@ -1,5 +1,5 @@
 package com.thebinaryfox.finecraft;
 
-public class BootstrapDownload {
+public class BootstrapArguments {
 
 }
