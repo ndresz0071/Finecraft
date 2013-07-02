@@ -48,19 +48,18 @@ Do you have multiple Minecraft accounts? Do you hate having to type in the usern
 We care about security. Nobody likes having their Minecraft account hijacked and used for griefing. For increased security, your password is encrypted based on your username (but not exactly your username) rather than on the text "passwordfile". Or, if you want super security, you can specify your own custom password (keep in mind that if you lose this password, you lose your profiles). This makes it much harder for a hacker to find your password.
 
 ---
-#Feature Requests or Questions
+###Feature Requests or Questions
 Is there something you think should be added or do you have a question? Just create an issue [here](https://github.com/TheBinaryFox/Finecraft/issues) and we'll check it out as soon as possible!
 
-#Issues
+###Issues
 Did you find something broken in Finecraft? If you aren't a java developer, create an issue [here](https://github.com/TheBinaryFox/Finecraft/issues) and we'll try and fix it ASAP. Otherwise, if you are a Java programmer, feel free to make a pull request.
 
-#Help
+###Help
 Not sure how to do something? Check out [the wiki](https://github.com/TheBinaryFox/Finecraft/wiki/), it may help out.
 
----
-#Developers
+###Developers
 Want to contribute to Finecraft or interface your launcher with the Finecraft bootstrapper? Check out our developer information [here](https://github.com/TheBinaryFox/Finecraft/wiki/Developer:-Home).
 
 ---
-#License
+###License
 Please see [LICENSE.md](https://github.com/TheBinaryFox/Finecraft/blob/master/LICENSE.md).
