@@ -1,4 +1,4 @@
-package com.thebinaryfox.finecraft;
+package com.thebinaryfox.finecraft.bs;
 
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -8,12 +8,69 @@ import java.util.prefs.Preferences;
  * 
  * @author TheBinaryFox
  */
-public class BootstrapConfig {
+public class _BSC {
+
+	/**
+	 * All the configuration options.
+	 * 
+	 * @author TheBinaryFox
+	 */
+	static public enum Options {
+
+		UPDATE_TYPE("bootstrap.update.type", "release"),
+		UPDATE_CAST("bootstrap.update.cast", ""),
+		UI_WIDTH("bootstrap.ui.width", 854),
+		UI_HEIGHT("bootstrap.ui.height", 480);
+
+		// Enum stuff.
+		private String key;
+		private Object def;
+		private Object value;
+
+		private Options(String key, Object value) {
+			this.key = key;
+			this.def = value;
+		}
+
+		protected String key() {
+			return key;
+		}
+
+		protected Object defaults() {
+			return def;
+		}
+
+		protected void load() {
+			if (value instanceof Integer) {
+				value = get().prefs.getInt(key, def);
+			}
+		}
+
+		// Public
+		/**
+		 * Get the object's value.
+		 * 
+		 * @return
+		 */
+		public Object value() {
+
+		}
+
+		public int valueInt() {
+			if ()
+		}
+
+	}
 
 	// Static private
 	static private BootstrapConfig instance;
 
 	// Static public
+	/**
+	 * Get the bootstrap configuration manager.
+	 * 
+	 * @return
+	 */
 	static public BootstrapConfig get() {
 		if (instance == null) {
 			try {
@@ -63,14 +120,21 @@ public class BootstrapConfig {
 
 	/**
 	 * Write the default configuration values.
+	 * 
 	 * @throws BackingStoreException
 	 */
 	private void defaults() throws BackingStoreException {
-		df("bootstrap.url", "");
-		df("bootstrap.update.type", "release");
-		df("bootstrap.launcher.isolated", true);
+		Options[] opts = Options.values();
+		for (int i = 0; i < opts.length; i++) {
+			df(opts[i].key(), opts[i].defaults());
+		}
 	}
 
+	/**
+	 * Save the configuration values.
+	 * 
+	 * @throws BackingStoreException
+	 */
 	private void save() throws BackingStoreException {
 		prefs.flush();
 	}

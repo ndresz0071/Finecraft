@@ -1,5 +1,5 @@
 package com.thebinaryfox.finecraft.ui;
 
-public class UIBootstrapWelcome {
+public class UIBootstrapWelcome extends UIWindow {
 
 }
