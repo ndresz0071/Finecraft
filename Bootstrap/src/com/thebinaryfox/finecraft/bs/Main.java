@@ -1,16 +1,16 @@
 package com.thebinaryfox.finecraft.bs;
 
 /**
- * The main class of the Finecraft bootstrap.
+ * The program entry class of the Finecraft bootstrap.
  * 
  * @author TheBinaryFox
  */
 public class Main {
 
-	// Static private
+	// Fields: static private
 	static private Runnable exec;
 	
-	// Static public
+	// Methods: static public
 	/**
 	 * Program entry point.
 	 * 
@@ -19,6 +19,7 @@ public class Main {
 	 */
 	static public void main(String[] args) {
 		Bootstrap bootstrap = new Bootstrap();
+		bootstrap.arg(args);
 		bootstrap.run();
 		bootstrap = null;
 
