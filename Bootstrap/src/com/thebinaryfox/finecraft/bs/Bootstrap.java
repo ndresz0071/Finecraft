@@ -1,5 +1,7 @@
 package com.thebinaryfox.finecraft.bs;
 
+import java.io.File;
+
 /**
  * The main class of the Finecraft bootstrap.
  * 
@@ -14,12 +16,11 @@ public class Bootstrap {
 	// Fields: instance private
 	private boolean die = false;
 	private Logs log;
-	
+
 	// Constructors: public
 	public Bootstrap() {
 		log = new Logs();
 	}
-	
 
 	// Methods: instance public
 	/**
@@ -29,8 +30,6 @@ public class Bootstrap {
 	 *            the program arguments.
 	 */
 	public void arg(String[] args) {
-		args = new String[]{"-log"};
-		
 		Arguments argo = new Arguments();
 		try {
 			argo.parse(args);
@@ -38,7 +37,7 @@ public class Bootstrap {
 			argerror("!" + ex.getMessage());
 			System.exit(1);
 		}
-		
+
 		// Argument: version
 		int ave = argo.getCheckEmptyAndRemove("version");
 		switch (ave) {
@@ -49,7 +48,7 @@ public class Bootstrap {
 			break;
 
 		case 2:
-			argerror("!-version should not be a flag.");
+			argerror("!-version should be a flag.");
 			break;
 		}
 
@@ -69,24 +68,24 @@ public class Bootstrap {
 			break;
 
 		case 2:
-			argerror("!-help should not be a flag.");
+			argerror("!-help should be a flag.");
 			break;
 		}
-		
-		ave = argo.getCheckEmptyAndRemove("log");
-		switch (ave) {
-		case 1:
-			log.stream(System.out);
-			log.enable();
-			log.i("Bootstrap logging enabled.");
-			log.i("--------------------------");
-			break;
 
-		case 2:
-			argerror("!-log should not be a flag.");
-			break;
+		String aves = argo.getAndRemove("log");
+		if (aves != null) {
+			if (aves.isEmpty()) {
+				log.stream(System.out);
+				log.enable();
+				log.x();
+			} else {
+				log.stream(System.out);
+				log.stream(new File(aves));
+				log.enable();
+				log.x();
+			}
 		}
-		
+
 		// Argument: configuration entries
 		Configuration[] config = Configuration.values();
 		String val;
@@ -96,14 +95,15 @@ public class Bootstrap {
 			if (key.startsWith("bootstrapper.")) {
 				key = key.substring("bootstrapper.".length());
 			}
-			
+
 			val = argo.getAndRemove("-" + key);
 			if (val != null) {
 				if (val.isEmpty()) {
 					argerror("!Configuration arguments are not flags.");
 				}
-				
+
 				config[i].setTemporarily(val);
+				log.i("Temporarily set \"" + key + "\" to \"" + val + "\"");
 			}
 		}
 
@@ -135,7 +135,7 @@ public class Bootstrap {
 			die = true;
 		}
 	}
-	
+
 	public void argprint() {
 		argprint(-1);
 	}
@@ -143,7 +143,7 @@ public class Bootstrap {
 	public void argprint(int section) {
 		argprint(section, "");
 	}
-	
+
 	public void argprint(int section, String padding) {
 		if (section == -1 || section == 1) {
 			System.out.println(padding + "java -jar bootstrap.jar [-flag] [-arg value] ");
