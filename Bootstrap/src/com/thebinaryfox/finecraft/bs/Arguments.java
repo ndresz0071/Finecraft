@@ -34,14 +34,14 @@ public class Arguments {
 		boolean end = false;
 
 		for (int i = 0; i < args.length; i++) {
+			if (end) {
+				arguments_post.add(args[i]);
+				continue;
+			}
+			
 			String arg = args[i].trim();
 			if (arg.isEmpty())
 				continue;
-
-			if (end) {
-				arguments_post.add(arg);
-				continue;
-			}
 
 			if (key == null) {
 				if (arg.startsWith("-")) {
@@ -63,7 +63,8 @@ public class Arguments {
 			} else {
 				if (arg.startsWith("-")) {
 					arguments.put(key, "");
-					key = arg;
+					key = null;
+					i--;
 					continue;
 				}
 				
@@ -97,10 +98,24 @@ public class Arguments {
 	 *            the name of the argument.
 	 * @return 0 for non-existent, 1 for existent and empty, 2 for existent and contains a value.
 	 */
-	public int getAndEmpty(String name) {
+	public int getCheckEmpty(String name) {
 		String arg = arguments.get(name);
 		return arg == null ? 0 : arg.isEmpty() ? 1 : 2;
 	}
+
+	/**
+	 * Get an argument, remove it, and return a value based on its contents.
+	 * 
+	 * @param name
+	 *            the name of the argument.
+	 * @return 0 for non-existent, 1 for existent and empty, 2 for existent and contains a value.
+	 */
+	public int getCheckEmptyAndRemove(String name) {
+		String arg = arguments.remove(name);
+		return arg == null ? 0 : arg.isEmpty() ? 1 : 2;
+	}
+	
+	
 
 	/**
 	 * Get an argument and then remove it.
