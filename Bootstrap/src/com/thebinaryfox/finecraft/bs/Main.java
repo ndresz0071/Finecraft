@@ -5,7 +5,7 @@ package com.thebinaryfox.finecraft.bs;
  * 
  * @author TheBinaryFox
  */
-public class Main {
+public final class Main {
 
 	// Fields: static private
 	static private Runnable exec;

@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
  * 
  * @author TheBinaryFox
  */
-public class Arguments {
+public final class Arguments {
 
 	// Fields: instance private
 	private LinkedHashMap<String, String> arguments;

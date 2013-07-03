@@ -29,6 +29,8 @@ public class Bootstrap {
 	 *            the program arguments.
 	 */
 	public void arg(String[] args) {
+		args = new String[]{"-log"};
+		
 		Arguments argo = new Arguments();
 		try {
 			argo.parse(args);
@@ -68,6 +70,20 @@ public class Bootstrap {
 
 		case 2:
 			argerror("!-help should not be a flag.");
+			break;
+		}
+		
+		ave = argo.getCheckEmptyAndRemove("log");
+		switch (ave) {
+		case 1:
+			log.stream(System.out);
+			log.enable();
+			log.i("Bootstrap logging enabled.");
+			log.i("--------------------------");
+			break;
+
+		case 2:
+			argerror("!-log should not be a flag.");
 			break;
 		}
 		
