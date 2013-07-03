@@ -22,7 +22,7 @@ public class Bootstrap {
 	 *            the program arguments.
 	 */
 	public void arg(String[] args) {
-		args = new String[]{"-version"};
+		args = new String[]{"-version", "3"};
 		Arguments argo = new Arguments();
 		try {
 			argo.parse(args);
@@ -32,8 +32,23 @@ public class Bootstrap {
 			System.exit(1);
 		}
 
-		// Arguments
+		// Argument: version
 		int ave = argo.getAndEmpty("version");
+		switch (ave) {
+		case 1:
+			System.out.println("Finecraft Bootstrap V" + _version);
+			System.out.println(_website);
+			System.exit(0);
+			break;
+
+		case 2:
+			argerror("!-version should not contain a value.");
+			argprint();
+			break;
+		}
+		
+		// Argument: help
+		ave = argo.getAndEmpty("help");
 		switch (ave) {
 		case 1:
 			System.out.println("Finecraft Bootstrap V" + _version);
@@ -64,7 +79,8 @@ public class Bootstrap {
 	}
 
 	public void argprint() {
-
+		
+		
 		if (die) {
 			System.exit(1);
 		}

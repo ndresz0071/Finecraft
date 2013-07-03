@@ -61,12 +61,12 @@ public class Arguments {
 					throw new IllegalArgumentException("keys must start with a -");
 				}
 			} else {
-				if (key.startsWith("-")) {
-					key = null;
+				if (arg.startsWith("-")) {
 					arguments.put(key, "");
+					key = arg;
 					continue;
 				}
-
+				
 				arguments.put(key, arg);
 				key = null;
 			}
