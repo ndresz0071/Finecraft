@@ -2,6 +2,9 @@ package com.thebinaryfox.finecraft.ui;
 
 import static com.thebinaryfox.finecraft.bs.Configuration.*;
 
+import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -15,6 +18,8 @@ public abstract class BSUIWindow {
 
 	// Static private
 	static private JFrame window;
+	static final Color background = new Color(50, 50, 55);
+	static final Color text = new Color(235, 235, 235);
 
 	// Static public
 	/**
@@ -26,13 +31,16 @@ public abstract class BSUIWindow {
 
 		window = new JFrame();
 		window.setTitle("Finecraft");
+		window.setMinimumSize(new Dimension(500, 300));
 		window.setSize(asInteger(WINDOW_WIDTH), asInteger(WINDOW_HEIGHT));
 		window.setResizable(asBoolean(WINDOW_RESIZE));
+		window.setLocationRelativeTo(null);
 	}
 
 	// Static private
 	static private void change_do(BSUIWindow ui) {
 		ui.getPanel().removeAll();
+		ui.getPanel().setBackground(background);
 		ui.getPanel().setLayout(new SpringLayout());
 		ui.init();
 		ui.getPanel().validate();
@@ -63,7 +71,7 @@ public abstract class BSUIWindow {
 	 * @return the window's layout manager.
 	 */
 	protected SpringLayout getLayout() {
-		return (SpringLayout) window.getLayout();
+		return (SpringLayout) window.getContentPane().getLayout();
 	}
 
 	// Abstract
@@ -71,4 +79,12 @@ public abstract class BSUIWindow {
 	 * Initialize the UI.
 	 */
 	protected abstract void init();
+
+	/**
+	 * Animate the closing of the UI.
+	 * @return true if the animation is complete.
+	 */
+	protected boolean animate() {
+		return true;
+	}
 }
