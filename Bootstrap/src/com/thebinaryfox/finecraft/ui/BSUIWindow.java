@@ -35,6 +35,7 @@ public abstract class BSUIWindow {
 		window.setSize(asInteger(WINDOW_WIDTH), asInteger(WINDOW_HEIGHT));
 		window.setResizable(asBoolean(WINDOW_RESIZE));
 		window.setLocationRelativeTo(null);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	// Static private

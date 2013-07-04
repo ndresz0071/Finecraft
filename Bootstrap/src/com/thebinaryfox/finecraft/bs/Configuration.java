@@ -16,7 +16,6 @@ public enum Configuration {
 	WINDOW_WIDTH("ui.width", "854") {
 		public Integer get() {
 			try {
-				System.out.println(gvo(this));
 				return Integer.parseInt(gvo(this));
 			} catch (Exception ex) {
 				svo(this);
