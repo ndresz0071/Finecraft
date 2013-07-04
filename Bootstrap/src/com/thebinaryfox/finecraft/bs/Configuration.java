@@ -1,5 +1,8 @@
 package com.thebinaryfox.finecraft.bs;
 
+import java.net.URL;
+import java.util.prefs.Preferences;
+
 /**
  * An enum containing all configuration values used by the Finecraft bootstrap.
  * 
@@ -13,6 +16,7 @@ public enum Configuration {
 	WINDOW_WIDTH("ui.width", "854") {
 		public Integer get() {
 			try {
+				System.out.println(gvo(this));
 				return Integer.parseInt(gvo(this));
 			} catch (Exception ex) {
 				svo(this);
@@ -47,9 +51,42 @@ public enum Configuration {
 				return Boolean.parseBoolean(gvo(this));
 			}
 		}
+	},
+
+	/**
+	 * Get the download build type.
+	 */
+	DOWNLOAD_BUILD("bootstrap.download.build", Build.RELEASE.name()) {
+		public Build get() {
+			try {
+				return Build.valueOf(gvo(this).trim().toUpperCase());
+			} catch (Exception ex) {
+				svo(this);
+				return Build.valueOf(gvo(this).trim().toUpperCase());
+			}
+		}
+	},
+
+	/**
+	 * Get the URL to the download cast.
+	 */
+	DOWNLOAD_CAST("bootstrap.download.cast", "") {
+		public URL get() {
+			try {
+				String v = gvo(this);
+				if (v.trim().isEmpty())
+					return null;
+
+				return new URL(gvo(this));
+			} catch (Exception ex) {
+				svo(this);
+				return null;
+			}
+		}
 	};
 
 	// Fields
+	static private Preferences pref;
 	private final String key;
 	private String value;
 	private String defvl;
@@ -71,6 +108,14 @@ public enum Configuration {
 	 * @return the value string.
 	 */
 	static private String gvo(Configuration entry) {
+		if (entry.value == null) {
+			if (pref == null) {
+				pref = Preferences.userRoot().node("com.thebinaryfox.finecraft");
+			}
+			
+			entry.value = pref.get(entry.key, entry.defvl);
+		}
+		
 		return entry.value;
 	}
 
@@ -86,6 +131,40 @@ public enum Configuration {
 		} else {
 			entry.set(entry.defvl);
 		}
+	}
+
+	// Methods: static public
+	/**
+	 * Get the configuration entry as a string.
+	 * 
+	 * @param entry
+	 *            the entry.
+	 * @return the value of the entry.
+	 */
+	static public String asString(Configuration entry) {
+		return (String) entry.get();
+	}
+
+	/**
+	 * Get the configuration entry as an integer.
+	 * 
+	 * @param entry
+	 *            the entry.
+	 * @return the value of the entry.
+	 */
+	static public int asInteger(Configuration entry) {
+		return ((Integer) entry.get()).intValue();
+	}
+
+	/**
+	 * Get the configuration entry as a boolean.
+	 * 
+	 * @param entry
+	 *            the entry.
+	 * @return the value of the entry.
+	 */
+	static public boolean asBoolean(Configuration entry) {
+		return ((Boolean) entry.get()).booleanValue();
 	}
 
 	// Methods: instance public

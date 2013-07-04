@@ -1,5 +1,7 @@
 package com.thebinaryfox.finecraft.ui;
 
+import static com.thebinaryfox.finecraft.bs.Configuration.*;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -9,7 +11,7 @@ import javax.swing.SpringLayout;
  * 
  * @author TheBinaryFox
  */
-public abstract class UIWindow {
+public abstract class BSUIWindow {
 
 	// Static private
 	static private JFrame window;
@@ -24,10 +26,12 @@ public abstract class UIWindow {
 
 		window = new JFrame();
 		window.setTitle("Finecraft");
+		window.setSize(asInteger(WINDOW_WIDTH), asInteger(WINDOW_HEIGHT));
+		window.setResizable(asBoolean(WINDOW_RESIZE));
 	}
 
 	// Static private
-	static private void change_do(UIWindow ui) {
+	static private void change_do(BSUIWindow ui) {
 		ui.getPanel().removeAll();
 		ui.getPanel().setLayout(new SpringLayout());
 		ui.init();
@@ -40,7 +44,7 @@ public abstract class UIWindow {
 	 * Change to this window.
 	 */
 	public final void change() {
-		UIWindow.change_do(this);
+		BSUIWindow.change_do(this);
 	}
 
 	// Protected

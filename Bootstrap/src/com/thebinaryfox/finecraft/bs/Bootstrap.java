@@ -1,6 +1,11 @@
 package com.thebinaryfox.finecraft.bs;
 
 import java.io.File;
+import java.net.URL;
+
+import com.thebinaryfox.finecraft.ui.BSUIWindow;
+import com.thebinaryfox.finecraft.ui.UIBootstrap;
+import com.thebinaryfox.finecraft.ui.UIBootstrapWelcome;
 
 /**
  * The main class of the Finecraft bootstrap.
@@ -173,7 +178,22 @@ public class Bootstrap {
 	}
 
 	public void run() {
-
+		BSUIWindow.make();
+		
+		URL cast = (URL) Configuration.DOWNLOAD_CAST.get();
+		if (cast == null) {
+			new UIBootstrapWelcome().change();
+		} else {
+			new UIBootstrap().change();
+		}
+	}
+	
+	public void update() {
+		 
+	}
+	
+	public void launch() {
+		
 	}
 
 }
