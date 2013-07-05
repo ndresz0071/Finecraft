@@ -75,6 +75,11 @@ public abstract class BSUIWindow {
 		return (SpringLayout) window.getContentPane().getLayout();
 	}
 
+	protected void setGlass(JPanel panel) {
+		window.setGlassPane(panel);
+		panel.setVisible(true);
+	}
+
 	// Abstract
 	/**
 	 * Initialize the UI.
@@ -83,6 +88,7 @@ public abstract class BSUIWindow {
 
 	/**
 	 * Animate the closing of the UI.
+	 * 
 	 * @return true if the animation is complete.
 	 */
 	protected boolean animate() {

@@ -52,7 +52,7 @@ public class UIBootstrapWelcome extends BSUIWindow {
 		// Create
 		title = new JLabel("Welcome to Finecraft!");
 		titletext = new JLabel(
-				"<html><body style=\"width: 100%\">Before you can start, you need to pick a launcher to use. Below is a list of recommended launchers to use. If you wish to use a custom launcher, please select \"Other\" and enter its update cast URL. You can always change this setting later through the bootstrap configuration utility provided in the download.</body></html>");
+				"<html><body style=\"width: 100%\">Before you can start, you need to pick a launcher to use. Below is a list of recommended launchers to use. If you wish to use a custom launcher, please select \"Other\" and enter its update cast URL. You can always change this setting later through the bootstrap configuration utility provided with the Finecraft download.</body></html>");
 
 		title.setFont(title.getFont().deriveFont(40f).deriveFont(Font.BOLD));
 		title.setForeground(text);
@@ -181,9 +181,29 @@ public class UIBootstrapWelcome extends BSUIWindow {
 		new Thread("FCBS: Download Recommended List") {
 			@Override
 			public void run() {
-				try {
-					Thread.sleep(3000); // TODO replace with a download
-				} catch (Exception ex) {
+				while (true) {
+					try {
+						Thread.sleep(3000); // TODO replace with a download
+						
+						break;
+					} catch (Exception ex) {
+						// Retry
+						try {
+							mod.set(0, "`dRetrying in 5...");
+							Thread.sleep(1000);
+							mod.set(0, "`dRetrying in 4...");
+							Thread.sleep(1000);
+							mod.set(0, "`dRetrying in 3...");
+							Thread.sleep(1000);
+							mod.set(0, "`dRetrying in 2...");
+							Thread.sleep(1000);
+							mod.set(0, "`dRetrying in 1...");
+							Thread.sleep(1000);
+							mod.set(0, "`dDownloading...");
+						} catch (Exception ex2) {
+							continue;
+						}
+					}
 				}
 
 				recommendedurls = new LinkedHashMap<String, String>();
