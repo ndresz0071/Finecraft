@@ -4,6 +4,7 @@ import static com.thebinaryfox.finecraft.bs.Configuration.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -81,9 +82,26 @@ public abstract class BSUIWindow {
 		return (SpringLayout) window.getContentPane().getLayout();
 	}
 
+	/**
+	 * Set the window's glass pane.
+	 * 
+	 * @param panel
+	 *            the glass pane.
+	 */
 	protected void setGlass(JPanel panel) {
 		window.setGlassPane(panel);
 		panel.setVisible(true);
+	}
+
+	/**
+	 * Get a BufferedImage containing the contents of the window.
+	 * 
+	 * @return
+	 */
+	protected BufferedImage snapshot() {
+		BufferedImage bi = new BufferedImage(window.getContentPane().getWidth(), window.getContentPane().getHeight(), BufferedImage.TYPE_INT_RGB);
+		window.getContentPane().paint(bi.getGraphics());
+		return bi;
 	}
 
 	// Abstract

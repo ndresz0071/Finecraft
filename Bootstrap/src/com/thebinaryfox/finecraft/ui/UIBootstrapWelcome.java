@@ -50,6 +50,7 @@ public class UIBootstrapWelcome extends BSUIWindow {
 	private JScrollPane recommendedp;
 	private HashMap<String, String> recommendedurls;
 	private DefaultListModel mod;
+	private JPanel https_warning;
 
 	// Methods: instance protected
 	@Override
@@ -80,17 +81,10 @@ public class UIBootstrapWelcome extends BSUIWindow {
 				if (other.getText().trim().isEmpty())
 					return;
 
-				try {
-					other.setDisabledTextColor(Color.gray);
-					other.setBackground(other_okayc);
-					other.setBorder(other_okay);
-					next(new URL(other.getText()));
-					clean();
-				} catch (Exception ex) {
-					other.setDisabledTextColor(new Color(200, 100, 100));
-					other.setBackground(other_failc);
-					other.setBorder(other_fail);
-				}
+				other.setDisabledTextColor(Color.gray);
+				other.setBackground(other_okayc);
+				other.setBorder(other_okay);
+				next_prepare(other.getText());
 			}
 
 		});
@@ -106,8 +100,7 @@ public class UIBootstrapWelcome extends BSUIWindow {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					next(new URL(recommendedurls.get(recommended.getSelectedValue().toString())));
-					clean();
+					next_prepare(recommendedurls.get(recommended.getSelectedValue().toString()));
 				} catch (Exception ex) {
 				}
 			}
@@ -191,16 +184,60 @@ public class UIBootstrapWelcome extends BSUIWindow {
 
 	// Methods: instance private
 	/**
+	 * Check if the cast isn't using HTTPS. Warn the user if it isn't, otherwise continue.
+	 * 
+	 * @param url
+	 *            the url to check.
+	 * @throws IOException
+	 */
+	private void next_prepare(String urlstring) {
+		// Get URL object
+		URL url = null;
+		try {
+			url = new URL(urlstring);
+		} catch (Exception ex) {
+			if (other.isVisible()) {
+				other.setDisabledTextColor(new Color(200, 100, 100));
+				other.setBackground(other_failc);
+				other.setBorder(other_fail);
+			}
+			
+			return;
+		}
+		
+		// Check https
+		if (!url.getProtocol().equalsIgnoreCase("https")) {
+			if (https_warning == null) {
+				https_warning = new UIBootstrapGlass(this);
+				setGlass(https_warning);
+			}
+		} else {
+			next_do(url);
+		}
+	}
+
+	/**
 	 * Check if the launcher cast at the URL is valid. If it is, continue to the next screen.
 	 * 
 	 * @param url
 	 *            the url to check.
 	 * @throws IOException
 	 */
-	private void next(URL url) throws IOException {
-		Bootstrap.getLogger().i("Checking launcher update cast at " + url);
-		// TODO check if valid launcher update cast
-		throw new IOException("Unimplemented!");
+	private void next_do(URL url) {
+		try {
+			Bootstrap.getLogger().i("Checking launcher update cast at " + url);
+			// TODO check if valid launcher update cast
+
+			// clean();
+		} catch (Exception ex) {
+			if (other.isVisible()) {
+				other.setDisabledTextColor(new Color(200, 100, 100));
+				other.setBackground(other_failc);
+				other.setBorder(other_fail);
+			}
+
+			// TODO glass
+		}
 	}
 
 	/**

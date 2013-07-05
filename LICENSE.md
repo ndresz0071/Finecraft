@@ -15,7 +15,7 @@
     IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
---------------------------------------------------------------------
+---
 
 ###ZX for Java:
 
@@ -24,3 +24,9 @@
     public domain. You can do whatever you want with these files.
     
     This software is provided "as is", without any warranty.
+
+---
+
+###JHLabs Image Manipulation
+
+    Copyright 2005 Huxtable.com. All rights reserved.
