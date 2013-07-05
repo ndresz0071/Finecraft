@@ -9,7 +9,7 @@ public final class Main {
 
 	// Fields: static private
 	static private Runnable exec;
-	
+
 	// Methods: static public
 	/**
 	 * Program entry point.
@@ -22,10 +22,10 @@ public final class Main {
 		bootstrap.arg(args);
 		bootstrap.run();
 		bootstrap = null;
-		
+
 		while (exec != null) {
 			Runnable mexc = exec;
-			
+
 			exec = null;
 			mexc.run();
 		}

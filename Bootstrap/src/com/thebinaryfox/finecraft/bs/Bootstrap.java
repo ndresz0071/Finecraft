@@ -18,6 +18,19 @@ public class Bootstrap {
 	static public final String _version = "0.0.1";
 	static public final String _website = "https://github.com/TheBinaryFox/Finecraft";
 
+	// Fields: static private
+	static private Logs logs_glob;
+
+	// Methods: static public
+	/**
+	 * Get the bootstrap logger.
+	 * 
+	 * @return the bootstrap logger.
+	 */
+	static public Logs getLogger() {
+		return logs_glob;
+	}
+
 	// Fields: instance private
 	private boolean die = false;
 	private Logs log;
@@ -25,6 +38,7 @@ public class Bootstrap {
 	// Constructors: public
 	public Bootstrap() {
 		log = new Logs();
+		logs_glob = log;
 	}
 
 	// Methods: instance public
@@ -179,7 +193,7 @@ public class Bootstrap {
 
 	public void run() {
 		BSUIWindow.make();
-		
+
 		URL cast = (URL) Configuration.DOWNLOAD_CAST.get();
 		if (cast == null) {
 			new UIBootstrapWelcome().change();
@@ -187,13 +201,13 @@ public class Bootstrap {
 			new UIBootstrap().change();
 		}
 	}
-	
+
 	public void update() {
-		 
+
 	}
-	
+
 	public void launch() {
-		
+
 	}
 
 }

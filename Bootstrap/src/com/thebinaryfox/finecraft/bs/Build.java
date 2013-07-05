@@ -5,5 +5,5 @@ public enum Build {
 	RELEASE,
 	BETA,
 	DEVELOPER;
-	
+
 }

@@ -11,9 +11,9 @@ public class XMLRecommended {
 
 	// Methods: static public
 	static public XMLRecommended fromURL(URL url) throws IOException {
-		
+
 	}
-	
+
 	// Methods: public
 	private void parse(String data) {
 		DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
@@ -21,5 +21,5 @@ public class XMLRecommended {
 		Document doc = bdr.parse(data);
 		doc.getDocumentElement().normalize();
 	}
-	
+
 }

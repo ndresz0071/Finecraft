@@ -6,30 +6,47 @@ import java.awt.RenderingHints;
 
 import javax.swing.JTextField;
 
+/**
+ * A custom JTextField with a placeholder.
+ * 
+ * @author TheBinaryFox
+ */
 public class BSUITextField extends JTextField {
 
+	// CONSTANT
 	private static final long serialVersionUID = -1100884327443439632L;
 
-	// Fields
+	// Fields: instance private
 	private String placeholder;
 
-	// Constructors
+	// Constructors: public
 	public BSUITextField(String placeholder) {
 		super("");
-		
+
 		this.placeholder = placeholder;
 	}
 
-	// Public methods
+	// Methods: public
+	/**
+	 * Set the text field placeholder.
+	 * 
+	 * @param placeholder
+	 *            the placeholder.
+	 */
 	public void setPlaceholder(String placeholder) {
 		this.placeholder = placeholder;
 	}
 
+	/**
+	 * Get the text field placeholder.
+	 * 
+	 * @return the placeholder.
+	 */
 	public String getPlaceholder() {
 		return placeholder;
 	}
 
-	// Overridden methods
+	// Overriden
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

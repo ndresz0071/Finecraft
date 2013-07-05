@@ -23,6 +23,8 @@ import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.thebinaryfox.finecraft.bs.Bootstrap;
+
 /**
  * The welcome window where you select a launcher.
  * 
@@ -30,6 +32,7 @@ import javax.swing.event.ListSelectionListener;
  */
 public class UIBootstrapWelcome extends BSUIWindow {
 
+	// CONSTANT
 	static private final Color background = new Color(235, 235, 235);
 	static private final Color selection = new Color(220, 220, 220);
 	static private final Color text = new Color(100, 100, 100);
@@ -38,6 +41,7 @@ public class UIBootstrapWelcome extends BSUIWindow {
 	static private final Color other_failc = new Color(255, 210, 210);
 	static private final Color other_okayc = Color.white;
 
+	// Fields: instance private
 	private JLabel title;
 	private JLabel titletext;
 	private JList recommended;
@@ -47,8 +51,12 @@ public class UIBootstrapWelcome extends BSUIWindow {
 	private HashMap<String, String> recommendedurls;
 	private DefaultListModel mod;
 
+	// Methods: instance protected
 	@Override
 	protected void init() {
+		Bootstrap.getLogger().x();
+		Bootstrap.getLogger().i("Displaying welcome UI.");
+
 		// Create
 		title = new JLabel("Welcome to Finecraft!");
 		titletext = new JLabel(
@@ -76,7 +84,8 @@ public class UIBootstrapWelcome extends BSUIWindow {
 					other.setDisabledTextColor(Color.gray);
 					other.setBackground(other_okayc);
 					other.setBorder(other_okay);
-					check(new URL(other.getText()));
+					next(new URL(other.getText()));
+					clean();
 				} catch (Exception ex) {
 					other.setDisabledTextColor(new Color(200, 100, 100));
 					other.setBackground(other_failc);
@@ -92,6 +101,18 @@ public class UIBootstrapWelcome extends BSUIWindow {
 		use.setBackground(new Color(215, 215, 215));
 		use.setBorder(other_okay);
 		use.setVisible(false);
+		use.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					next(new URL(recommendedurls.get(recommended.getSelectedValue().toString())));
+					clean();
+				} catch (Exception ex) {
+				}
+			}
+
+		});
 
 		mod = new DefaultListModel();
 		mod.addElement("`dDownloading...");
@@ -168,27 +189,51 @@ public class UIBootstrapWelcome extends BSUIWindow {
 		layout.putConstraint("South", use, -20, "South", container);
 	}
 
-	@Override
-	protected boolean animate() {
-		return true;
-	}
-
-	private void check(URL url) throws IOException {
+	// Methods: instance private
+	/**
+	 * Check if the launcher cast at the URL is valid. If it is, continue to the next screen.
+	 * 
+	 * @param url
+	 *            the url to check.
+	 * @throws IOException
+	 */
+	private void next(URL url) throws IOException {
+		Bootstrap.getLogger().i("Checking launcher update cast at " + url);
 		// TODO check if valid launcher update cast
+		throw new IOException("Unimplemented!");
 	}
 
+	/**
+	 * Null all objects contained.
+	 */
+	private void clean() {
+		title = null;
+		titletext = null;
+		recommended = null;
+		other = null;
+		use = null;
+		recommendedp = null;
+		recommendedurls = null;
+		mod = null;
+	}
+
+	/**
+	 * Download the list of recommended launchers.
+	 */
 	private void recommended_download() {
 		new Thread("FCBS: Download Recommended List") {
 			@Override
 			public void run() {
+				Bootstrap.getLogger().i("Download recommended launcher list...");
 				while (true) {
 					try {
 						Thread.sleep(3000); // TODO replace with a download
-						
+
 						break;
 					} catch (Exception ex) {
 						// Retry
 						try {
+							Bootstrap.getLogger().i("Download of recommended launcher list failed. Retrying in 5...");
 							mod.set(0, "`dRetrying in 5...");
 							Thread.sleep(1000);
 							mod.set(0, "`dRetrying in 4...");
@@ -212,6 +257,7 @@ public class UIBootstrapWelcome extends BSUIWindow {
 				}
 
 				// Animate
+				Bootstrap.getLogger().i("Inserting recommended launchers with animation.");
 				mod.remove(0);
 				String[] keys = recommendedurls.keySet().toArray(new String[0]);
 				for (int i = 0; i < keys.length; i++) {

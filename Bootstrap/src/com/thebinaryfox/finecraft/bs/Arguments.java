@@ -38,7 +38,7 @@ public final class Arguments {
 				arguments_post.add(args[i]);
 				continue;
 			}
-			
+
 			String arg = args[i].trim();
 			if (arg.isEmpty())
 				continue;
@@ -67,7 +67,7 @@ public final class Arguments {
 					i--;
 					continue;
 				}
-				
+
 				arguments.put(key, arg);
 				key = null;
 			}
@@ -114,8 +114,6 @@ public final class Arguments {
 		String arg = arguments.remove(name);
 		return arg == null ? 0 : arg.isEmpty() ? 1 : 2;
 	}
-	
-	
 
 	/**
 	 * Get an argument and then remove it.

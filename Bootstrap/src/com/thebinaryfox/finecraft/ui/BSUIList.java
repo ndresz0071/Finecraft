@@ -12,8 +12,17 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.Border;
 
+/**
+ * A custom JList which supports animation and disabled entries.
+ * 
+ * @author TheBinaryFox
+ */
 public class BSUIList extends JList implements ListCellRenderer {
 
+	// CONSTANT
+	private static final long serialVersionUID = 4301893039536091492L;
+
+	// Classes: private
 	/**
 	 * Selection model with disabled items.
 	 * 
@@ -34,37 +43,66 @@ public class BSUIList extends JList implements ListCellRenderer {
 		}
 	}
 
-	// Static private
-	private static final long serialVersionUID = 4301893039536091492L;
-
-	// Field
+	// Fields: instance private
 	private Color disabledfg = Color.gray;
 	private Border ibord = BorderFactory.createEmptyBorder(3, 3, 3, 3);
 
-	// Constructor
+	// Constructors: public
 	public BSUIList() {
 		setCellRenderer(this);
 		setSelectionModel(new SelModel());
 	}
 
-	// Methods
+	// Methods: instance public
+	/**
+	 * Get the foreground color of disabled items.
+	 * 
+	 * @return the foreground color.
+	 */
 	public Color getDisabledForeground() {
 		return disabledfg;
 	}
 
+	/**
+	 * Set the foreground color of disabled items.
+	 * 
+	 * @param color
+	 *            the foreground color.
+	 */
 	public void setDisabledForeground(Color color) {
 		disabledfg = color == null ? Color.gray : color;
 	}
 
+	/**
+	 * Get the border of list items.
+	 * 
+	 * @return the border of list items.
+	 */
 	public Border getItemBorder() {
 		return ibord;
 	}
 
+	/**
+	 * Set the border of list items.
+	 * 
+	 * @param border
+	 *            the border of list items.
+	 */
 	public void setItemBorder(Border border) {
 		ibord = border;
 	}
 
-	// Cell renderer
+	/**
+	 * Kill the thread handling animations.
+	 */
+	public void killsync() {
+		synchronized (sync) {
+			handler = null;
+			updates = null;
+		}
+	}
+
+	// Overriden: Cell renderer
 	@Override
 	public Component getListCellRendererComponent(JList arg0, Object arg1, int arg2, boolean arg3, boolean arg4) {
 		String text = arg1.toString();
@@ -142,10 +180,18 @@ public class BSUIList extends JList implements ListCellRenderer {
 		return renderer;
 	}
 
+	// Fields: instance private
 	private Thread handler;
 	private final Object sync = new Object();
 	private ArrayList<Runnable> updates;
 
+	// Methods: instance private
+	/**
+	 * Execute a runnable.
+	 * 
+	 * @param r
+	 *            the runnable.
+	 */
 	private void update(Runnable r) {
 		if (handler == null) {
 			updates = new ArrayList<Runnable>();

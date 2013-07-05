@@ -39,6 +39,12 @@ public abstract class BSUIWindow {
 	}
 
 	// Static private
+	/**
+	 * Change the UI window.
+	 * 
+	 * @param ui
+	 *            the UI window.
+	 */
 	static private void change_do(BSUIWindow ui) {
 		ui.getPanel().removeAll();
 		ui.getPanel().setBackground(background);
@@ -85,13 +91,4 @@ public abstract class BSUIWindow {
 	 * Initialize the UI.
 	 */
 	protected abstract void init();
-
-	/**
-	 * Animate the closing of the UI.
-	 * 
-	 * @return true if the animation is complete.
-	 */
-	protected boolean animate() {
-		return true;
-	}
 }

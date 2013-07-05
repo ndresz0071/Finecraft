@@ -84,53 +84,8 @@ public enum Configuration {
 		}
 	};
 
-	// Fields
+	// Fields: static private
 	static private Preferences pref;
-	private final String key;
-	private String value;
-	private String defvl;
-	private boolean temp;
-
-	// Constructors
-	private Configuration(String key, String value) {
-		this.key = key;
-		this.defvl = value;
-		this.temp = false;
-	}
-
-	// Methods: static private
-	/**
-	 * Get the value string.
-	 * 
-	 * @param entry
-	 *            the entry to get the value from.
-	 * @return the value string.
-	 */
-	static private String gvo(Configuration entry) {
-		if (entry.value == null) {
-			if (pref == null) {
-				pref = Preferences.userRoot().node("com.thebinaryfox.finecraft");
-			}
-			
-			entry.value = pref.get(entry.key, entry.defvl);
-		}
-		
-		return entry.value;
-	}
-
-	/**
-	 * Reset the value string back to the default.
-	 * 
-	 * @param entry
-	 *            the entry to reset.
-	 */
-	static private void svo(Configuration entry) {
-		if (entry.temp) {
-			entry.setTemporarily(entry.defvl);
-		} else {
-			entry.set(entry.defvl);
-		}
-	}
 
 	// Methods: static public
 	/**
@@ -164,6 +119,53 @@ public enum Configuration {
 	 */
 	static public boolean asBoolean(Configuration entry) {
 		return ((Boolean) entry.get()).booleanValue();
+	}
+
+	// Fields: instance private
+	private final String key;
+	private String value;
+	private String defvl;
+	private boolean temp;
+
+	// Constructors: private
+	private Configuration(String key, String value) {
+		this.key = key;
+		this.defvl = value;
+		this.temp = false;
+	}
+
+	// Methods: static private
+	/**
+	 * Get the value string.
+	 * 
+	 * @param entry
+	 *            the entry to get the value from.
+	 * @return the value string.
+	 */
+	static private String gvo(Configuration entry) {
+		if (entry.value == null) {
+			if (pref == null) {
+				pref = Preferences.userRoot().node("com.thebinaryfox.finecraft");
+			}
+
+			entry.value = pref.get(entry.key, entry.defvl);
+		}
+
+		return entry.value;
+	}
+
+	/**
+	 * Reset the value string back to the default.
+	 * 
+	 * @param entry
+	 *            the entry to reset.
+	 */
+	static private void svo(Configuration entry) {
+		if (entry.temp) {
+			entry.setTemporarily(entry.defvl);
+		} else {
+			entry.set(entry.defvl);
+		}
 	}
 
 	// Methods: instance public
